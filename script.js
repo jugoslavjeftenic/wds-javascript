@@ -1,6 +1,20 @@
-const grandParent = document.querySelector(".grand-parent");
-const children = grandParent.querySelectorAll(".child");
-const parentOne = children[0].parentElement;
+const pearson = {
+    name: "Kyle",
+    friend: {
+        name: "Joe",
+        friend: {
+            name: "Sally",
+            friend: {
+                name: "Bomba"
+            }
+        }
+    }
+};
 
-children.forEach(child => child.style.color = "red");
-parentOne.style.color = "green";
+printNames(pearson);
+
+function printNames(passedPearson) {
+    if (passedPearson === null) return;
+    console.log(passedPearson.name);
+    printNames(passedPearson.friend);
+}
