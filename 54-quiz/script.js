@@ -10,24 +10,15 @@ const answers = document.querySelectorAll(".answer");
 const questions = document.querySelectorAll(".question-item");
 const alert = document.querySelector("#alert");
 
-const checkedAnswers = [];
-answers.forEach(answer => {
-	if (answer.checked === false) {
-		checkedAnswers.push(answer);
-	}
-});
-console.log(checkedAnswers);
-
 // TODO: 3. Create a submit event listener for the form that does the following.
 form.addEventListener("submit", e => {
-
 	//    1. Prevent the default behaviour
-	e.defaultPrevented;
+	e.preventDefault();
 	//    2. Get all selected answers
 	//       (use the `checked` property on the input to determine if it is selected or not)
-
 	//    3. Loop through the selected answer to see if they are correct or not
 	//       (Check the value of the answer to see if it is the string "true")
+
 	//    4. For each correct answer add the class `correct` to the parent with the class
 	//       `question-item` and remove the class `incorrect`.
 	//    5. For each incorrect answer add the class `incorrect` to the parent with the class
@@ -35,8 +26,21 @@ form.addEventListener("submit", e => {
 	//    6. BONUS: Make sure unanswered questions show up as incorrect.
 	//       The easiest way to do this is to add the incorrect class and
 	//       removing the correct class from all question items before checking the correct answers
+	questions.forEach(question => {
+		question.classList.add("incorrect");
+	});
+	answers.forEach(answer => {
+		if (answer.checked === true && answer.defaultValue.toLowerCase() === "true") {
+			answer.closest(".question-item").classList.remove("incorrect");
+			answer.closest(".question-item").classList.add("correct");
+		}
+	});
 	//    7. BONUS: If all answers are correct show the element with the id `alert` and
 	//       hide it after one second (look into setTimeout)
-	//       (use the class active to show the alert and remove the class to hide it) 
-
+	//       (use the class active to show the alert and remove the class to hide it)
+	const questionsArray = Array.from(questions);
+	if (!questionsArray.every(question => { question.classList.contains("incorrect"); })) {
+		alert.classList.add("active");
+		setTimeout(() => { alert.classList.remove("active"); }, 1000);
+	}
 });
